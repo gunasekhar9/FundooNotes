@@ -38,8 +38,8 @@ namespace FundooNotes.Controllers
         {
             try
             {
-                this.userBL.LogInUser(userLogIn);
-                return this.Ok(new { success = true, message = $"LogIn Successful {userLogIn.email}" });
+                string result = this.userBL.LogInUser(userLogIn);
+                return this.Ok(new { success = true, message = $"LogIn Successful {userLogIn.email}, data = {result}" });
             }
             catch (Exception e)
             {
