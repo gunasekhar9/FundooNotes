@@ -47,16 +47,16 @@ namespace FundooNotes.Controllers
                 throw e;
             }
         }
-        [Authorize]
+        [AllowAnonymous]
         [HttpPut("resetpassword")]
         public ActionResult ResetPassword(string email, string password, string cPassword)
         {
             try
             {
-                ///var userEmailObject = User.Claims.Where(x => x.Type.ToString().Equals("email", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()?.Value;
+                //var userEmailObject = User.Claims.First(x => x.Type == "email").Value;
                 if (password != cPassword)
                 {
-                    return BadRequest(new { success = false, message = $"Paswords are not equal" });
+                    return BadRequest(new { success = false, message = $"Passwords are not same" });
                 }
                 // var identity = User.Identity as ClaimsIdentity 
                 this.userBL.ResetPassword(email, password, cPassword);
@@ -86,7 +86,7 @@ namespace FundooNotes.Controllers
             try
             {
                 var result = this.userBL.GetAllUsers();
-                return this.Ok(new { success = true, message = $"Below are the Updated User Data's", data = result });
+                return this.Ok(new { success = true, message = $"Below are the User data", data = result });
             }
             catch (Exception e)
             {

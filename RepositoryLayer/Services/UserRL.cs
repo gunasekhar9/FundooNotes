@@ -41,7 +41,7 @@ namespace RepositoryLayer.Services
                 throw e;
             }
         }
-        public string  LogInUser(UserLogIn userLogIn)
+        public string LogInUser(UserLogIn userLogIn)
         {
             try
             {
@@ -87,6 +87,7 @@ namespace RepositoryLayer.Services
                 {
                     result.password = password;
                     result.cPassword = cPassword;
+                    result.modifiedDate = DateTime.Now;
                     dbContext.SaveChanges();
                 }
             }
@@ -107,26 +108,6 @@ namespace RepositoryLayer.Services
                 throw e;
             }
         }
-        private void msmqQueue_ReceiveCompleted(object sender, ReceiveCompletedEventArgs e)
-        {
-            try
-            {
-                MessageQueue queue = (MessageQueue)sender;
-                Message msg = queue.EndReceive(e.AsyncResult);
-               // EmailService.SendEmail(e.Message.ToString(), GenerateToken(e.Message.ToString()));
-                queue.BeginReceive();
-            }
-            catch (MessageQueueException ex)
-            {
-                if (ex.MessageQueueErrorCode ==
-                    MessageQueueErrorCode.AccessDenied)
-                {
-                    Console.WriteLine("Access is denied. " +
-                        "Queue might be a system queue.");
-                }
-                // Handle other sources of MessageQueueException.
-            }
-        }
         public List<User> GetAllUsers()
         {
             try
@@ -134,7 +115,7 @@ namespace RepositoryLayer.Services
                 var result = dbContext.Users.ToList();
                 return result;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
