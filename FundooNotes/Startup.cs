@@ -64,6 +64,7 @@ namespace FundooNotes
             );
             services.AddTransient<IUserBL, UserBL>();
             services.AddTransient<IUserRL, UserRL>();
+            services.AddDataProtection();
 
             services.AddAuthentication(x =>
             {
@@ -99,6 +100,8 @@ namespace FundooNotes
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

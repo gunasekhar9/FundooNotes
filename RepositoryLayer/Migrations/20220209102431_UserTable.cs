@@ -19,7 +19,7 @@ namespace RepositoryLayer.Migrations
                     address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    cPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    cPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     registeredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     modifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -32,8 +32,7 @@ namespace RepositoryLayer.Migrations
                 name: "IX_Users_email",
                 table: "Users",
                 column: "email",
-                unique: true,
-                filter: "[email] IS NOT NULL");
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
